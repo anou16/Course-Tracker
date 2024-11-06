@@ -32,9 +32,9 @@ public class CourseRoll {
 	 * @param enrollmentCap enrollment cap to set
 	 */
 	public CourseRoll(int enrollmentCap) {
-		setEnrollmentCap(enrollmentCap);
-		this.roll = new LinkedAbstractList<Student>(enrollmentCap);
-	}
+        setEnrollmentCap(enrollmentCap);
+        this.roll = new LinkedAbstractList<>(enrollmentCap);
+    }
 
 
 	/**
@@ -46,13 +46,18 @@ public class CourseRoll {
 	 */
 	public void setEnrollmentCap(int enrollmentCap) {
         if (enrollmentCap < MIN_ENROLLMENT || enrollmentCap > MAX_ENROLLMENT) {
-            throw new IllegalArgumentException("Invalid enrollmentCap");
-        }
-        if (roll != null && enrollmentCap < roll.size()) {
-            throw new IllegalArgumentException("Enrollment cap less than current roll size");
+            throw new IllegalArgumentException("Invalid enrollment cap.");
         }
         
-        roll.setCapacity(enrollmentCap);
+        if (roll != null && enrollmentCap < roll.size()) {
+            throw new IllegalArgumentException("Enrollment cap cannot be less than the number of enrolled students.");
+        }
+        
+        if (roll != null) {
+            roll.setCapacity(enrollmentCap);  
+        } else {
+            roll = new LinkedAbstractList<>(enrollmentCap);  
+        }
         
         this.enrollmentCap = enrollmentCap;
     }
