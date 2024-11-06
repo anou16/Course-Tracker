@@ -45,16 +45,16 @@ public class CourseRoll {
 	 * @throws IllegalArgumentException if the enrollmentCap is invalid
 	 */
 	public void setEnrollmentCap(int enrollmentCap) {
-		if(enrollmentCap < MIN_ENROLLMENT || enrollmentCap > MAX_ENROLLMENT) {
-			throw new IllegalArgumentException("Invalid enrollmentCap");
-		}
-		
-		if(roll != null && enrollmentCap < roll.size()) {
-			throw new IllegalArgumentException("Invalid enrollmentCap");
-		}
-		
-		this.enrollmentCap = enrollmentCap;
-	}
+        if (enrollmentCap < MIN_ENROLLMENT || enrollmentCap > MAX_ENROLLMENT) {
+            throw new IllegalArgumentException("Invalid enrollmentCap");
+        }
+        if (roll != null && enrollmentCap < roll.size()) {
+            throw new IllegalArgumentException("Enrollment cap less than current roll size");
+        }
+        
+        
+        this.enrollmentCap = enrollmentCap;
+    }
 
 
 	/**

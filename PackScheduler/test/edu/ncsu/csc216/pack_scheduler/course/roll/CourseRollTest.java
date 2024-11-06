@@ -168,6 +168,20 @@ class CourseRollTest {
          
          
     }
+    @Test
+    public void testSetEnrollmentCapValid() {
+        CourseRoll roll = new CourseRoll(20);
+        roll.setEnrollmentCap(30);
+        assertEquals(30, roll.getEnrollmentCap());
+    }
+
+    @Test
+    public void testSetEnrollmentCapInvalid() {
+        CourseRoll roll = new CourseRoll(20);
+        Student s = new Student("John", "Doe", "jdoe", "jdoe@ncsu.edu", "password", 15);
+        roll.enroll(s);
+        assertThrows(IllegalArgumentException.class, () -> roll.setEnrollmentCap(0));
+    }
 
 
 
