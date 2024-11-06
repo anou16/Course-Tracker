@@ -53,7 +53,7 @@ class LinkedStackTest {
 		assertEquals("B", stack.pop());
 		assertEquals(1, stack.size());
 
-		assertEquals("B", stack.pop());
+		assertEquals("A", stack.pop());
 		assertEquals(1, stack.size());
 
 		stack.pop();

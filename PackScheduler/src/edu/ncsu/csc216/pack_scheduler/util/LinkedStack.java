@@ -1,5 +1,7 @@
 package edu.ncsu.csc216.pack_scheduler.util;
 
+import java.util.EmptyStackException;
+
 /**
  * LinkedStack implements Stack methods for linked list functionality.
  * 
@@ -7,13 +9,26 @@ package edu.ncsu.csc216.pack_scheduler.util;
  * @author Anoushka Piduru
  */
 public class LinkedStack<E> implements Stack<E> {
+	/** A stack of elements. */
+	private E[] stack;
+	/** The size of the stack. */
+	private int size;
+	/** The capacity of the stack. */
+	private int capacity;
+
 	/**
-	 * Constructor for LinkedStack.
+	 * Constructor for ArrayStack.
 	 * 
 	 * @param capacity the capacity of the stack.
 	 */
 	public LinkedStack(int capacity) {
-		// Implement
+		if (capacity <= 0) {
+			throw new IllegalArgumentException("Invalid capacity.");
+		}
+		this.capacity = capacity;
+		this.size = 0;
+
+		stack = (E[]) new Object[capacity];
 	}
 
 	/**
@@ -23,7 +38,10 @@ public class LinkedStack<E> implements Stack<E> {
 	 * @throws IllegalArgumentException if capacity has been reached.
 	 */
 	public void push(E element) {
-		// Implement
+		if (size == capacity) {
+			throw new IllegalArgumentException("Stack has reached capacity.");
+		}
+		stack[size++] = element;
 	}
 
 	/**
@@ -33,7 +51,12 @@ public class LinkedStack<E> implements Stack<E> {
 	 * @throws EmptyStackException if the stack is empty.
 	 */
 	public E pop() {
-		return null;
+		if (isEmpty()) {
+			throw new EmptyStackException();
+		}
+		E pop = stack[--size];
+		stack[size] = null;
+		return pop;
 	}
 
 	/**
@@ -42,7 +65,7 @@ public class LinkedStack<E> implements Stack<E> {
 	 * @return true if the stack is empty, false if not.
 	 */
 	public boolean isEmpty() {
-		return false;
+		return size == 0;
 	}
 
 	/**
@@ -51,7 +74,7 @@ public class LinkedStack<E> implements Stack<E> {
 	 * @return the number of elements in the stack.
 	 */
 	public int size() {
-		return 0;
+		return size;
 	}
 
 	/**
@@ -61,6 +84,9 @@ public class LinkedStack<E> implements Stack<E> {
 	 * @throws IllegalArgumentException if the capacity is invalid.
 	 */
 	public void setCapacity(int capacity) {
-		// Implement
+		if (capacity <= 0 || capacity < size) {
+			throw new IllegalArgumentException("Invalid capacity.");
+		}
+		this.capacity = capacity;
 	}
 }
