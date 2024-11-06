@@ -31,8 +31,7 @@ public class LinkedAbstractList<E> extends AbstractList<E> {
         }
         this.front = null;
         this.size = 0;
-        
-        setCapacity(capacity);
+        this.capacity = capacity;
     }
 
     /**
@@ -41,12 +40,12 @@ public class LinkedAbstractList<E> extends AbstractList<E> {
 	 * @param capacity the new capacity to set
 	 * @throws IllegalArgumentException if the new capacity is less than the current size
 	 */
-	public void setCapacity(int capacity) {
-	    if (capacity < size) {
-	        throw new IllegalArgumentException("Capacity cannot be less than the current list size.");
-	    }
-	    this.capacity = capacity;
-	}
+    public void setCapacity(int capacity) {
+        if (capacity < size) {
+            throw new IllegalArgumentException("Capacity cannot be less than the current list size.");
+        }
+        this.capacity = capacity;
+    }
 
 	/**
      * Removes the element from that index and returns the data
@@ -193,34 +192,32 @@ public class LinkedAbstractList<E> extends AbstractList<E> {
 	 * 
 	 * @author Neha Pothireddy
 	 */
-	private class ListNode { 
-		/** data in the node */
-		E data; 
-		/** next node in the list */
-		ListNode next; 
-		/**
-		 * Constructor which assigns a value for the data in the node
-		 * 
-		 * @param data the data in the node
-		 */
-		ListNode(E data) {
-			this(data, null);
-		}
-		
-		/**
-		 * Constructor that assigns a value for data in the node and the next node in the list
-		 * 
-		 * @param data the data in the node
-		 * @param next the next node in the list
-		 */
-		ListNode(E data, ListNode next){
-			this.data = data;
-			this.next = next;
-		}
-		
-		
-		
-	}
+	private class ListNode {
+        /** Data in the node */
+        E data;
+        /** Next node in the list */
+        ListNode next;
+
+        /**
+         * Constructs a ListNode with the specified data.
+         * 
+         * @param data the data for the node
+         */
+        ListNode(E data) {
+            this(data, null);
+        }
+
+        /**
+         * Constructs a ListNode with the specified data and next node.
+         * 
+         * @param data the data for the node
+         * @param next the next node
+         */
+        ListNode(E data, ListNode next) {
+            this.data = data;
+            this.next = next;
+        }
+    }
 
 
 }
