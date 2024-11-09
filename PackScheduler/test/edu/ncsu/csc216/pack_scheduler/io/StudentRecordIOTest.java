@@ -49,12 +49,12 @@ class StudentRecordIOTest {
 	private String validStudent9 = "Dylan,Nolan,dnolan,placerat.Cras.dictum@dictum.net,pw,5";
 
 	/** Array to hold expected results */
-	private String [] validStudents = {validStudent0, validStudent1, validStudent2, validStudent3, validStudent4, validStudent5,
-	        validStudent6, validStudent7, validStudent8, validStudent9};
-	
+	private String[] validStudents = { validStudent0, validStudent1, validStudent2, validStudent3, validStudent4,
+			validStudent5, validStudent6, validStudent7, validStudent8, validStudent9 };
+
 	/** Array to hold expected results */
-	private String[] validStudentsSorted = {validStudent3, validStudent6, validStudent4, validStudent5, validStudent2, validStudent8,
-			validStudent0, validStudent9, validStudent1, validStudent7};
+	private String[] validStudentsSorted = { validStudent3, validStudent6, validStudent4, validStudent5, validStudent2,
+			validStudent8, validStudent0, validStudent9, validStudent1, validStudent7 };
 
 	/** hashed value in records */
 	private String hashPW;
@@ -62,29 +62,27 @@ class StudentRecordIOTest {
 	/** hash algorithm */
 	private static final String HASH_ALGORITHM = "SHA-256";
 
-
 	/**
-	 * helper method, replaces substring pw with the hashed value for “pw”
+	 * helper method, replaces substring pw with the hashed value for "pw"
 	 */
 	@BeforeEach
 	public void setUp() {
-	    try {
-	        String password = "pw";
-	        MessageDigest digest = MessageDigest.getInstance(HASH_ALGORITHM);
-	        digest.update(password.getBytes());
-	        hashPW = Base64.getEncoder().encodeToString(digest.digest());
+		try {
+			String password = "pw";
+			MessageDigest digest = MessageDigest.getInstance(HASH_ALGORITHM);
+			digest.update(password.getBytes());
+			hashPW = Base64.getEncoder().encodeToString(digest.digest());
 
-	        for (int i = 0; i < validStudents.length; i++) {
-	            validStudents[i] = validStudents[i].replace(",pw,", "," + hashPW + ",");
-	        }
-	        for (int i = 0; i < validStudentsSorted.length; i++) {
-	            validStudentsSorted[i] = validStudentsSorted[i].replace(",pw,", "," + hashPW + ",");
-	        }
-	    } catch (NoSuchAlgorithmException e) {
-	        fail("Unable to create hash during setup");
-	    }
+			for (int i = 0; i < validStudents.length; i++) {
+				validStudents[i] = validStudents[i].replace(",pw,", "," + hashPW + ",");
+			}
+			for (int i = 0; i < validStudentsSorted.length; i++) {
+				validStudentsSorted[i] = validStudentsSorted[i].replace(",pw,", "," + hashPW + ",");
+			}
+		} catch (NoSuchAlgorithmException e) {
+			fail("Unable to create hash during setup");
+		}
 	}
-
 
 	/**
 	 * Tests readValidStudentRecords().
@@ -103,7 +101,6 @@ class StudentRecordIOTest {
 		}
 	}
 
-
 	/**
 	 * Tests readInvalidCourseRecords().
 	 */
@@ -118,7 +115,6 @@ class StudentRecordIOTest {
 		}
 	}
 
-
 	/**
 	 * Tests writeStudentRecords()
 	 */
@@ -127,14 +123,13 @@ class StudentRecordIOTest {
 		SortedList<Student> students = new SortedList<>();
 		students.add(new Student("Zahir", "King", "zking", "orci.Donec@ametmassaQuisque.com", hashPW, 15));
 
-
 		try {
 			StudentRecordIO.writeStudentRecords("test-files/actual_student_records.txt", students);
 		} catch (IOException e) {
 			fail("Cannot write to student records file");
 		}
 
-		checkFiles("test-files/expected_student_records.txt", "test-files/actual_student_records.txt"); 
+		checkFiles("test-files/expected_student_records.txt", "test-files/actual_student_records.txt");
 	}
 
 	/**
@@ -150,21 +145,21 @@ class StudentRecordIOTest {
 		assertEquals("/home/sesmith5/actual_student_records.txt (No such file or directory)", exception.getMessage());
 	}
 
-
 	/**
 	 * Helper method to compare two files for the same contents
+	 * 
 	 * @param expFile expected output
 	 * @param actFile actual output
 	 */
 	private void checkFiles(String expFile, String actFile) {
 		try (Scanner expScanner = new Scanner(new FileInputStream(expFile));
-			 Scanner actScanner = new Scanner(new FileInputStream(actFile));) {
+				Scanner actScanner = new Scanner(new FileInputStream(actFile));) {
 
-			while (expScanner.hasNextLine()  && actScanner.hasNextLine()) {
+			while (expScanner.hasNextLine() && actScanner.hasNextLine()) {
 				String exp = expScanner.nextLine();
 				String act = actScanner.nextLine();
 				assertEquals(exp, act, "Expected: " + exp + " Actual: " + act);
-				//The third argument helps with debugging!
+				// The third argument helps with debugging!
 			}
 			if (expScanner.hasNextLine()) {
 				fail("The expected results expect another line " + expScanner.nextLine());
@@ -178,7 +173,6 @@ class StudentRecordIOTest {
 		} catch (IOException e) {
 			fail("Error reading files.");
 		}
-		}
-
+	}
 
 }

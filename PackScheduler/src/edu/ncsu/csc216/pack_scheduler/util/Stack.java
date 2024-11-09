@@ -20,7 +20,6 @@ public interface Stack<E> {
 	 * Removes and returns the element at the top of the stack.
 	 * 
 	 * @return the element at the top of the stack.
-	 * @throws EmptyStackException if the stack is empty.
 	 */
 	public E pop();
 
