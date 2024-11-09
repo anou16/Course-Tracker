@@ -54,9 +54,8 @@ class LinkedStackTest {
 		assertEquals(1, stack.size());
 
 		assertEquals("A", stack.pop());
-		assertEquals(1, stack.size());
+		assertEquals(0, stack.size());
 
-		stack.pop();
 		assertThrows(EmptyStackException.class, () -> stack.pop());
 	}
 

@@ -21,7 +21,7 @@ class ArrayStackTest {
 	 */
 	@BeforeEach
 	void setUp() {
-		stack = new ArrayStack<>(5);
+		stack = new ArrayStack<String>(5);
 	}
 
 	/**
@@ -53,9 +53,8 @@ class ArrayStackTest {
 		assertEquals(1, stack.size());
 
 		assertEquals("A", stack.pop());
-		assertEquals(1, stack.size());
+		assertEquals(0, stack.size());
 
-		stack.pop();
 		assertThrows(EmptyStackException.class, () -> stack.pop());
 	}
 

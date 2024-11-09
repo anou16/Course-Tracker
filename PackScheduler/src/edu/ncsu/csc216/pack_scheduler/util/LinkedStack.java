@@ -10,11 +10,7 @@ import java.util.EmptyStackException;
  */
 public class LinkedStack<E> implements Stack<E> {
 	/** A stack of elements. */
-	private E[] stack;
-	/** The size of the stack. */
-	private int size;
-	/** The capacity of the stack. */
-	private int capacity;
+	private LinkedAbstractList<E> stack;
 
 	/**
 	 * Constructor for ArrayStack.
@@ -22,13 +18,7 @@ public class LinkedStack<E> implements Stack<E> {
 	 * @param capacity the capacity of the stack.
 	 */
 	public LinkedStack(int capacity) {
-		if (capacity <= 0) {
-			throw new IllegalArgumentException("Invalid capacity.");
-		}
-		this.capacity = capacity;
-		this.size = 0;
-
-		stack = (E[]) new Object[capacity];
+		stack = new LinkedAbstractList<E>(capacity);
 	}
 
 	/**
@@ -38,10 +28,10 @@ public class LinkedStack<E> implements Stack<E> {
 	 * @throws IllegalArgumentException if capacity has been reached.
 	 */
 	public void push(E element) {
-		if (size == capacity) {
+		if (size() == stack.capacity) {
 			throw new IllegalArgumentException("Stack has reached capacity.");
 		}
-		stack[size++] = element;
+		stack.add(element);
 	}
 
 	/**
@@ -51,12 +41,10 @@ public class LinkedStack<E> implements Stack<E> {
 	 * @throws EmptyStackException if the stack is empty.
 	 */
 	public E pop() {
-		if (isEmpty()) {
+		if (size() == 0) {
 			throw new EmptyStackException();
 		}
-		E pop = stack[--size];
-		stack[size] = null;
-		return pop;
+		return stack.remove(stack.size() - 1);
 	}
 
 	/**
@@ -65,7 +53,7 @@ public class LinkedStack<E> implements Stack<E> {
 	 * @return true if the stack is empty, false if not.
 	 */
 	public boolean isEmpty() {
-		return size == 0;
+		return size() == 0;
 	}
 
 	/**
@@ -74,7 +62,7 @@ public class LinkedStack<E> implements Stack<E> {
 	 * @return the number of elements in the stack.
 	 */
 	public int size() {
-		return size;
+		return stack.size();
 	}
 
 	/**
@@ -84,9 +72,9 @@ public class LinkedStack<E> implements Stack<E> {
 	 * @throws IllegalArgumentException if the capacity is invalid.
 	 */
 	public void setCapacity(int capacity) {
-		if (capacity <= 0 || capacity < size) {
+		if (capacity < 0 || capacity < size()) {
 			throw new IllegalArgumentException("Invalid capacity.");
 		}
-		this.capacity = capacity;
+		stack.setCapacity(capacity);
 	}
 }
