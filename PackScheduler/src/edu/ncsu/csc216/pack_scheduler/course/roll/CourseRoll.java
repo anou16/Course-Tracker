@@ -1,5 +1,7 @@
 package edu.ncsu.csc216.pack_scheduler.course.roll;
 
+import edu.ncsu.csc216.pack_scheduler.course.Course;
+
 import edu.ncsu.csc216.pack_scheduler.user.Student;
 import edu.ncsu.csc216.pack_scheduler.util.LinkedAbstractList;
 
@@ -12,29 +14,40 @@ import edu.ncsu.csc216.pack_scheduler.util.LinkedAbstractList;
 public class CourseRoll {
 
 	/** the roll’s enrollment capacity*/
-	private int enrollmentCap; 
+	private int enrollmentCap;
+	
 	
 	/** LinkedList of students for the roll */
 	LinkedAbstractList<Student> roll;
+	
+	 /** List of students on the waitlist for the course */
+	private LinkedAbstractList<Student> waitlist;
 	
 	/** the smallest class size */
 	private final static int MIN_ENROLLMENT = 10;
 	 
 	/** the largest class size is */
 	private final static int MAX_ENROLLMENT = 250;
+	 /** Maximum capacity of the waitlist */
+	private static final int WAITLIST_CAPACITY = 10;
 
 	
 	
 	
 	/**
 	 * Constructor which sets the CourseRoll object
-	 * 
+	 * @param course the Course associated with this CourseRoll
 	 * @param enrollmentCap enrollment cap to set
 	 */
-	public CourseRoll(int enrollmentCap) {
-        setEnrollmentCap(enrollmentCap);
-        this.roll = new LinkedAbstractList<>(enrollmentCap);
-    }
+	 public CourseRoll(Course course, int enrollmentCap) {
+	        if (course == null) {
+	            throw new IllegalArgumentException("Course cannot be null.");
+	        }
+	       
+	        setEnrollmentCap(enrollmentCap);
+	        this.roll = new LinkedAbstractList<>(enrollmentCap);
+	        this.waitlist = new LinkedAbstractList<>(WAITLIST_CAPACITY); 
+	    }
 
 
 	/**
@@ -81,18 +94,24 @@ public class CourseRoll {
 	 * @throws IllegalArgumentException if the student is already enrolled
 	 */
 	public void enroll(Student s) {
-		if(s == null) {
-			throw new IllegalArgumentException("Student is null");
+		 if (s == null) {
+		        throw new IllegalArgumentException("Student is null");
+		    }
+
+		    if (getOpenSeats() <= 0) { 
+		        if (waitlist.size() >= WAITLIST_CAPACITY) { 
+		            throw new IllegalArgumentException("Class is full");
+		        } else {
+		            waitlist.add(waitlist.size(), s); 
+		        }
+		    }
+
+		    if (!canEnroll(s)) { 
+		        throw new IllegalArgumentException("Student is already enrolled");
+		    }
+
+		    roll.add(roll.size(), s); 
 		}
-		if(getOpenSeats() <= 0) {
-			throw new IllegalArgumentException("Class is full");
-		}
-		if(!canEnroll(s)) {
-			throw new IllegalArgumentException("Student is already enrolled");
-		}
-		
-		roll.add(roll.size(), s);
-	}
 	
 	/**
 	 * Drops a student from the roll 
@@ -107,6 +126,8 @@ public class CourseRoll {
 	    }
 
 	    int index = -1;
+
+	    
 	    for (int i = 0; i < roll.size(); i++) {
 	        if (roll.get(i).equals(s)) {
 	            index = i;
@@ -114,13 +135,35 @@ public class CourseRoll {
 	        }
 	    }
 
-	    if (index == -1) {
-	        throw new IllegalArgumentException("Student not enrolled");
-	    }
+	    if (index != -1) {
+	        
+	        roll.remove(index);
 
-	    roll.remove(index);
+	       
+	        if (!waitlist.isEmpty()) {
+	            Student nextInLine = waitlist.remove(0);
+	            roll.add(roll.size(), nextInLine);
+	        }
+	    } else {
+	        
+	        index = -1; 
+	        for (int i = 0; i < waitlist.size(); i++) {
+	            if (waitlist.get(i).equals(s)) {
+	                index = i;
+	                break;
+	            }
+	        }
+
+	        if (index == -1) {
+	            throw new IllegalArgumentException("Student not enrolled");
+	        }
+
+	        
+	        waitlist.remove(index);
+	    }
 	}
 	
+
 	/**
 	 * Gets the number of open seats by subtracting the roll size from the enrollmentCap
 	 * 
@@ -137,7 +180,17 @@ public class CourseRoll {
 	 * @return true if the student can be enrolled 
 	 */
 	public boolean canEnroll(Student s) {
-		 return getOpenSeats() > 0 && !roll.contains(s);
+		return s != null && !roll.contains(s) && !waitlist.contains(s) &&
+	               (getOpenSeats() > 0 || waitlist.size() < WAITLIST_CAPACITY);
 	}
+	
+	 /**
+     * Gets the number of students on the waitlist.
+     * 
+     * @return the number of students on the waitlist
+     */
+    public int getNumberOnWaitlist() {
+        return waitlist.size();
+    }
 
 }

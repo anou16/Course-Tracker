@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import edu.ncsu.csc216.pack_scheduler.course.Course;
 import edu.ncsu.csc216.pack_scheduler.user.Student;
 import edu.ncsu.csc216.pack_scheduler.util.LinkedAbstractList;
 
@@ -19,6 +20,9 @@ import edu.ncsu.csc216.pack_scheduler.util.LinkedAbstractList;
  * @author Michael Wang
  */
 class CourseRollTest {
+	
+	 /** Course instance for CourseRoll creation */
+    private Course course;
 
 	/** LinkedList of students*/
 	LinkedAbstractList<Student> student;
@@ -28,6 +32,8 @@ class CourseRollTest {
 	 */
 	@BeforeEach
 	void setUp (){
+		
+		course = new Course("CSC216", "Programming Concepts - Java", "001", 4, "sesmith5", 30, "MW", 1330, 1445);
 		student = new LinkedAbstractList<Student>(20);
 		Student s = new Student("first", "last", "id", "email@ncsu.edu", "hashedpassword");
 		Student s1 = new Student("rose", "smith", "id1", "rose@ncsu.edu", "hashedpassword");
@@ -48,10 +54,10 @@ class CourseRollTest {
 		
 		//assertEquals(4, student.size());
 		
-		CourseRoll c = new CourseRoll(12);
+		CourseRoll c = course.getCourseRoll();
 		
-		assertEquals(12, c.getEnrollmentCap());
-		assertEquals(12, c.getOpenSeats());
+		 assertEquals(30, c.getEnrollmentCap());
+	     assertEquals(30, c.getOpenSeats());
 		
 	}
 	 /**
@@ -60,7 +66,7 @@ class CourseRollTest {
      */
     @Test
     void testSetEnrollmentCap() {
-        CourseRoll c = new CourseRoll(12);
+    	CourseRoll c = course.getCourseRoll();
 
         c.setEnrollmentCap(35);
         assertEquals(35, c.getEnrollmentCap());
@@ -80,7 +86,8 @@ class CourseRollTest {
      */
     @Test
     void testEnroll() {
-        CourseRoll c = new CourseRoll(10);
+    	CourseRoll c = course.getCourseRoll();
+    	c.setEnrollmentCap(10);
         Student newStudent = new Student("new", "student", "id4", "new@ncsu.edu", "hashedpassword");
 
         c.enroll(newStudent);
@@ -107,7 +114,8 @@ class CourseRollTest {
     @Test
     void testDrop() {
        
-        CourseRoll c = new CourseRoll(10);
+    	CourseRoll c = course.getCourseRoll();
+    	c.setEnrollmentCap(10);
         Student sToDrop = new Student("first", "last", "id", "email@ncsu.edu", "hashedpassword");
         c.enroll(sToDrop);
         
@@ -123,7 +131,8 @@ class CourseRollTest {
      */
     @Test
     void testGetOpenSeats() {
-        CourseRoll c = new CourseRoll(10);
+    	CourseRoll c = course.getCourseRoll();
+    	c.setEnrollmentCap(10);
         assertEquals(10, c.getOpenSeats());
 
         Student newStudent = new Student("new", "student", "id6", "new@ncsu.edu", "hashedpassword");
@@ -138,7 +147,8 @@ class CourseRollTest {
      */
     @Test
     void testCanEnroll() {
-        CourseRoll c = new CourseRoll(10);
+    	CourseRoll c = course.getCourseRoll();
+    	c.setEnrollmentCap(10);
         Student newStudent = new Student("new", "student", "id7", "new@ncsu.edu", "hashedpassword");
         assertEquals(10, c.getOpenSeats());
         
@@ -153,7 +163,8 @@ class CourseRollTest {
      */
     @Test
     void testDropError() {
-    	 CourseRoll c = new CourseRoll(10);
+    	CourseRoll c = course.getCourseRoll();
+    	c.setEnrollmentCap(10);
     	 Student newStudent = new Student("new", "student", "id7", "new@ncsu.edu", "hashedpassword");
          assertEquals(10, c.getOpenSeats());
          
@@ -170,19 +181,22 @@ class CourseRollTest {
     }
     @Test
     public void testSetEnrollmentCapValid() {
-        CourseRoll roll = new CourseRoll(20);
-        roll.setEnrollmentCap(30);
-        assertEquals(30, roll.getEnrollmentCap());
+    	CourseRoll c = course.getCourseRoll();
+    	c.setEnrollmentCap(10);
+    	c.setEnrollmentCap(20);
+    	assertEquals(20, c.getEnrollmentCap());
     }
 
     @Test
     public void testSetEnrollmentCapInvalid() {
-        CourseRoll roll = new CourseRoll(20);
+    	CourseRoll c = course.getCourseRoll();
+    	c.setEnrollmentCap(20);
         Student s = new Student("John", "Doe", "jdoe", "jdoe@ncsu.edu", "password", 15);
-        roll.enroll(s);
-        assertThrows(IllegalArgumentException.class, () -> roll.setEnrollmentCap(0));
+        c.enroll(s);
+        assertThrows(IllegalArgumentException.class, () -> c.setEnrollmentCap(1));
+    }
     }
 
 
 
-}
+

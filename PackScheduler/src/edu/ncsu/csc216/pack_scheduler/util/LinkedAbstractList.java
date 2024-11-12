@@ -15,6 +15,7 @@ public class LinkedAbstractList<E> extends AbstractList<E> {
 	private ListNode front;
 	/** Size of the list */
 	private int size;
+	private ListNode back;
 	/** Capacity of the list */
 	int capacity;
 
@@ -30,6 +31,7 @@ public class LinkedAbstractList<E> extends AbstractList<E> {
 			throw new IllegalArgumentException("Capacity cannot be negative.");
 		}
 		this.front = null;
+		this.back = null;
 		this.size = 0;
 		this.capacity = capacity;
 	}
@@ -67,6 +69,9 @@ public class LinkedAbstractList<E> extends AbstractList<E> {
 			value = front.data;
 			// the node in the list
 			front = front.next;
+			if (size == 1) {
+                back = null; 
+            }
 
 		} else {
 			// removing from elsewhere in the list
@@ -76,6 +81,9 @@ public class LinkedAbstractList<E> extends AbstractList<E> {
 			}
 			value = current.next.data;
 			current.next = current.next.next;
+			if (index == size - 1) {
+                back = current; 
+            }
 		}
 
 		size--;
@@ -108,21 +116,28 @@ public class LinkedAbstractList<E> extends AbstractList<E> {
 			throw new IndexOutOfBoundsException("Index out of bounds.");
 		}
 
-		if (front == null) {
-			front = new ListNode(element);
-		}
+		 ListNode newNode = new ListNode(element);
 
-		if (index == 0) {
-			front = new ListNode(element, front);
-		} else {
-			ListNode current = front;
-			for (int i = 0; i < index - 1; i++) {
-				current = current.next;
-			}
-			current.next = new ListNode(element, current.next);
-		}
-		size++;
-	}
+	        if (index == 0) { 
+	            newNode.next = front;
+	            front = newNode;
+	            if (size == 0) {
+	                back = newNode; 
+	            }
+	        } else if (index == size) { 
+	            back.next = newNode; 
+	            back = newNode;
+	        } else { 
+	            ListNode current = front;
+	            for (int i = 0; i < index - 1; i++) {
+	                current = current.next;
+	            }
+	            newNode.next = current.next;
+	            current.next = newNode;
+	        }
+
+	        size++;
+	    }
 
 	/**
 	 * Returns the data at the index
