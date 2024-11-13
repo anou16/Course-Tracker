@@ -23,9 +23,6 @@ public class CourseRoll {
 	 /** List of students on the waitlist for the course */
 	private LinkedAbstractList<Student> waitlist;
 
-
-	private Course course;
-	
 	/** the smallest class size */
 	private final static int MIN_ENROLLMENT = 10;
 	 
