@@ -125,43 +125,19 @@ public class CourseRoll {
 	        throw new IllegalArgumentException("Student is null");
 	    }
 
-	    int index = -1;
-
-	    
-	    for (int i = 0; i < roll.size(); i++) {
-	        if (roll.get(i).equals(s)) {
-	            index = i;
-	            break;
-	        }
-	    }
-
-	    if (index != -1) {
-	        
-	        roll.remove(index);
-
-	       
-	        if (!waitlist.isEmpty()) {
+	    if (roll.contains(s)) {
+	        roll.remove(s);
+	        if (!waitlist.isEmpty() && getOpenSeats() > 0) {
 	            Student nextInLine = waitlist.remove(0);
-	            roll.add(roll.size(), nextInLine);
+	            roll.add(nextInLine);
 	        }
+	    } else if (waitlist.contains(s)) {
+	        waitlist.remove(s);
 	    } else {
-	        
-	        index = -1; 
-	        for (int i = 0; i < waitlist.size(); i++) {
-	            if (waitlist.get(i).equals(s)) {
-	                index = i;
-	                break;
-	            }
-	        }
-
-	        if (index == -1) {
-	            throw new IllegalArgumentException("Student not enrolled");
-	        }
-
-	        
-	        waitlist.remove(index);
+	        throw new IllegalArgumentException("Student not enrolled");
 	    }
 	}
+
 	
 
 	/**
