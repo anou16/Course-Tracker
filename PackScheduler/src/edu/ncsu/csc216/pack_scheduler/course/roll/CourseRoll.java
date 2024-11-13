@@ -94,24 +94,27 @@ public class CourseRoll {
 	 * @throws IllegalArgumentException if the student is already enrolled
 	 */
 	public void enroll(Student s) {
-		 if (s == null) {
-		        throw new IllegalArgumentException("Student is null");
-		    }
+	    if (s == null) {
+	        throw new IllegalArgumentException("Student is null");
+	    }
 
-		    if (getOpenSeats() <= 0) { 
-		        if (waitlist.size() >= WAITLIST_CAPACITY) { 
-		            throw new IllegalArgumentException("Class is full");
-		        } else {
-		            waitlist.add(waitlist.size(), s); 
-		        }
-		    }
+	    if (!canEnroll(s)) {
+	        throw new IllegalArgumentException("Student is already enrolled");
+	    }
 
-		    if (!canEnroll(s)) { 
-		       
-		    }
+	    if (getOpenSeats() > 0) {
 
-		    roll.add(roll.size(), s); 
-		}
+	        roll.add(s);
+	    } else if (waitlist.size() < WAITLIST_CAPACITY) {
+	        
+	        waitlist.add(s);
+	    } else {
+	       
+	        throw new IllegalArgumentException("Class and waitlist are full");
+	    }
+	}
+
+
 	
 	/**
 	 * Drops a student from the roll 
