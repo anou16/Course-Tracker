@@ -106,7 +106,9 @@ public class CourseRoll {
 		        }
 		    }
 
-		    
+		    if (!canEnroll(s)) { 
+		        throw new IllegalArgumentException("Student is already enrolled");
+		    }
 
 		    roll.add(roll.size(), s); 
 		}
