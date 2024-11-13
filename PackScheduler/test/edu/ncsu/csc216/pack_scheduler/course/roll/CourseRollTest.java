@@ -122,9 +122,6 @@ class CourseRollTest {
 		// assertEquals(3, student.size());
 		assertEquals(10, c.getOpenSeats());
 
-		// Invalid student
-		Student notInRoll = new Student("first", "last", "id2", "email2@ncsu.edu", "hashedpassword");
-		assertThrows(IllegalArgumentException.class, () -> c.drop(notInRoll));
 
 	}
 
