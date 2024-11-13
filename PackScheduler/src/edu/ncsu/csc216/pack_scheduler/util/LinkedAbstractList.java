@@ -15,6 +15,7 @@ public class LinkedAbstractList<E> extends AbstractList<E> {
 	private ListNode front;
 	/** Size of the list */
 	private int size;
+	/** Last node of the list. */
 	private ListNode back;
 	/** Capacity of the list */
 	int capacity;
@@ -70,8 +71,8 @@ public class LinkedAbstractList<E> extends AbstractList<E> {
 			// the node in the list
 			front = front.next;
 			if (size == 1) {
-                back = null; 
-            }
+				back = null;
+			}
 
 		} else {
 			// removing from elsewhere in the list
@@ -82,8 +83,8 @@ public class LinkedAbstractList<E> extends AbstractList<E> {
 			value = current.next.data;
 			current.next = current.next.next;
 			if (index == size - 1) {
-                back = current; 
-            }
+				back = current;
+			}
 		}
 
 		size--;
@@ -116,28 +117,28 @@ public class LinkedAbstractList<E> extends AbstractList<E> {
 			throw new IndexOutOfBoundsException("Index out of bounds.");
 		}
 
-		 ListNode newNode = new ListNode(element);
+		ListNode newNode = new ListNode(element);
 
-	        if (index == 0) { 
-	            newNode.next = front;
-	            front = newNode;
-	            if (size == 0) {
-	                back = newNode; 
-	            }
-	        } else if (index == size) { 
-	            back.next = newNode; 
-	            back = newNode;
-	        } else { 
-	            ListNode current = front;
-	            for (int i = 0; i < index - 1; i++) {
-	                current = current.next;
-	            }
-	            newNode.next = current.next;
-	            current.next = newNode;
-	        }
+		if (index == 0) {
+			newNode.next = front;
+			front = newNode;
+			if (size == 0) {
+				back = newNode;
+			}
+		} else if (index == size) {
+			back.next = newNode;
+			back = newNode;
+		} else {
+			ListNode current = front;
+			for (int i = 0; i < index - 1; i++) {
+				current = current.next;
+			}
+			newNode.next = current.next;
+			current.next = newNode;
+		}
 
-	        size++;
-	    }
+		size++;
+	}
 
 	/**
 	 * Returns the data at the index
