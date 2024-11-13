@@ -90,23 +90,18 @@ class CourseRollTest {
 
 	    c.enroll(newStudent);
 	    assertEquals(9, c.getOpenSeats());
-
 	    assertThrows(IllegalArgumentException.class, () -> c.enroll(null));
-
 	    for (int i = 0; i < 9; i++) {
 	        c.enroll(new Student("test" + i, "student", "id" + i, "test" + i + "@ncsu.edu", "hashedpassword"));
 	    }
 	    assertEquals(0, c.getOpenSeats());
-
 	    Student waitlistStudent = new Student("waitlist", "student", "id_waitlist", "waitlist@ncsu.edu", "hashedpassword");
 	    c.enroll(waitlistStudent);
 	    assertEquals(1, c.getNumberOnWaitlist());
-
 	    for (int i = 1; i < 10; i++) {
 	        c.enroll(new Student("waitlist" + i, "student", "id_waitlist" + i, "waitlist" + i + "@ncsu.edu", "hashedpassword"));
 	    }
 	    assertEquals(10, c.getNumberOnWaitlist());
-
 	    assertThrows(IllegalArgumentException.class, 
 	        () -> c.enroll(new Student("extra", "student", "id_extra", "extra@ncsu.edu", "hashedpassword")));
 	}
