@@ -153,7 +153,6 @@ public class RegistrationManager {
 				currentUser = s;
 				return true;
 			}
-			return false;
 		}
 
 //		Student s = studentDirectory.getStudentById(id);
