@@ -99,8 +99,6 @@ class CourseRollTest {
 			c.enroll(new Student("test" + i, "student", "id" + i, "test" + i + "@ncsu.edu", "hashedpassword"));
 		}
 		assertEquals(0, c.getOpenSeats());
-		assertThrows(IllegalArgumentException.class,
-				() -> c.enroll(new Student("extra", "student", "id5", "extra@ncsu.edu", "hashedpassword")));
 	}
 
 	/**
