@@ -1,5 +1,6 @@
 # csc217-223-LR3-4
 
-- Anoushka implemented and tested Stack
-- Anoushka implemented and tested Queue
-- 
+- apiduru implemented and tested Stack
+- apiduru implemented and tested Queue
+- zpu implemented and tested waitlist functionality
+- cwang completed testing and debugging
