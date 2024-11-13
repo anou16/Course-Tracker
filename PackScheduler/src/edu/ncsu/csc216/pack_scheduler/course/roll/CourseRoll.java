@@ -137,10 +137,7 @@ public class CourseRoll {
 	    } else if (waitlist.contains(s)) {
 	        
 	        waitlist.remove(s);
-	    } else {
-	       
-	        throw new IllegalArgumentException("Student not enrolled");
-	    }
+	    } 
 	}
 
 
