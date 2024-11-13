@@ -20,10 +20,10 @@ public class CourseRoll {
 	/** LinkedList of students for the roll */
 	LinkedAbstractList<Student> roll;
 	
-	/** List of students on the waitlist for the course */
+	 /** List of students on the waitlist for the course */
 	private LinkedAbstractList<Student> waitlist;
 
-	/** course */
+
 	private Course course;
 	
 	/** the smallest class size */
@@ -132,23 +132,21 @@ public class CourseRoll {
 	    }
 
 	    if (roll.contains(s)) {
+	        
 	        roll.remove(s);
 
+	       
 	        if (!waitlist.isEmpty() && getOpenSeats() > 0) {
-	            Student nextInLine = waitlist.remove(0);
-	            roll.add(nextInLine);
-
-	            if (!nextInLine.getSchedule().addCourseToSchedule(this.course)) {
-	                throw new IllegalArgumentException("Could not add course to student's schedule due to conflict or duplicate.");
-	            }
+	            Student nextInLine = waitlist.remove(0); 
+	            roll.add(nextInLine);  
 	        }
 	    } else if (waitlist.contains(s)) {
+	        
 	        waitlist.remove(s);
 	    } 
 	}
 
 
-	
 
 	/**
 	 * Gets the number of open seats by subtracting the roll size from the enrollmentCap
