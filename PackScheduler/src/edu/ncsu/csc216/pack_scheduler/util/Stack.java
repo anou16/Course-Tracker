@@ -14,28 +14,28 @@ public interface Stack<E> {
 	 * @param element the element being added.
 	 * @throws IllegalArgumentException if capacity has been reached.
 	 */
-	public void push(E element);
+	void push(E element);
 
 	/**
 	 * Removes and returns the element at the top of the stack.
 	 * 
 	 * @return the element at the top of the stack.
 	 */
-	public E pop();
+	E pop();
 
 	/**
 	 * Returns true if the stack is empty.
 	 * 
 	 * @return true if the stack is empty, false if not.
 	 */
-	public boolean isEmpty();
+	boolean isEmpty();
 
 	/**
 	 * Returns the number of elements in the stack.
 	 * 
 	 * @return the number of elements in the stack.
 	 */
-	public int size();
+	int size();
 
 	/**
 	 * Sets the stack's capacity.
@@ -43,5 +43,5 @@ public interface Stack<E> {
 	 * @param capacity the capacity of the stack.
 	 * @throws IllegalArgumentException if the capacity is invalid.
 	 */
-	public void setCapacity(int capacity);
+	void setCapacity(int capacity);
 }
