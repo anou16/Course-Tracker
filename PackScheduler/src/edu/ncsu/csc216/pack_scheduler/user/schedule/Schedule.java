@@ -60,6 +60,9 @@ public class Schedule {
 	 * @throws IllegalArgumentException if the course can't be added due to a conflict 
 	 */
 	public boolean addCourseToSchedule(Course c) {
+		if (c == null) {
+	        throw new IllegalArgumentException("Course cannot be null.");
+	    }
 		for(int i = 0; i < schedule.size(); i++) { 
 			if(c.isDuplicate(schedule.get(i))) {
 				throw new IllegalArgumentException("You are already enrolled in " + schedule.get(i).getName()); 
