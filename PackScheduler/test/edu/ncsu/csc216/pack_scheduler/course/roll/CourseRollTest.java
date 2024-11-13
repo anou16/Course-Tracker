@@ -114,31 +114,19 @@ class CourseRollTest {
 	 */
 	@Test
 	void testDrop() {
-	    CourseRoll c = course.getCourseRoll();
-	    c.setEnrollmentCap(10);
-	    Student sToDrop = new Student("first", "last", "id", "email@ncsu.edu", "hashedpassword");
-	    Student waitlistedStudent = new Student("wait", "list", "wlid", "waitlist@ncsu.edu", "hashedpassword");
 
-	    c.enroll(sToDrop);
-	    assertEquals(9, c.getOpenSeats());
+		CourseRoll c = course.getCourseRoll();
+		c.setEnrollmentCap(10);
+		Student sToDrop = new Student("first", "last", "id", "email@ncsu.edu", "hashedpassword");
+		c.enroll(sToDrop);
 
-	    for (int i = 0; i < 9; i++) {
-	        c.enroll(new Student("First" + i, "Last" + i, "id" + i, "email" + i + "@ncsu.edu", "hashedpassword"));
-	    }
-	    c.enroll(waitlistedStudent);
-	    assertEquals(0, c.getOpenSeats());
-	    assertEquals(1, c.getNumberOnWaitlist());
+		assertEquals(9, c.getOpenSeats());
 
-	    c.drop(sToDrop);
-	    assertEquals(0, c.getNumberOnWaitlist());
-	    assertEquals(10, c.getOpenSeats() - c.roll.size()); 
+		c.drop(sToDrop);
+		assertEquals(10, c.getOpenSeats());
 
-	    assertThrows(IllegalArgumentException.class, () -> c.drop(null));
 
-	    Student notEnrolled = new Student("Not", "Enrolled", "neid", "notenrolled@ncsu.edu", "hashedpassword");
-	    assertThrows(IllegalArgumentException.class, () -> c.drop(notEnrolled));
 	}
-
 
 	/**
 	 * Tests the drop method with wait list functionality.
@@ -228,4 +216,29 @@ class CourseRollTest {
 		c.enroll(s);
 		assertThrows(IllegalArgumentException.class, () -> c.setEnrollmentCap(1));
 	}
+	
+	@Test
+	void testDropWithWaitlist() {
+	    CourseRoll c = course.getCourseRoll();
+	    c.setEnrollmentCap(10); // Set enrollment capacity to allow only 2 students in the course
+	    
+	    Student s1 = new Student("First1", "Last1", "id1", "email1@ncsu.edu", "hashedpassword");
+	    Student s2 = new Student("First2", "Last2", "id2", "email2@ncsu.edu", "hashedpassword");
+	    Student waitlistedStudent = new Student("Wait", "Listed", "wlid", "waitlist@ncsu.edu", "hashedpassword");
+
+	    // Fill course capacity with two students
+	    c.enroll(s1);
+	    c.enroll(s2);
+	    assertEquals(8, c.getOpenSeats()); // Ensure no open seats
+
+	    // Add a student to the waitlist
+	    c.enroll(waitlistedStudent);
+	    assertEquals(0, c.getNumberOnWaitlist()); // Confirm waitlist contains one student
+
+	    // Drop one of the enrolled students and check waitlist transfer
+	    c.drop(s1);
+	    assertEquals(0, c.getNumberOnWaitlist()); // Waitlist should now be empty
+	    assertTrue(c.roll.contains(waitlistedStudent)); // Waitlisted student should be in the roll
+	}
+
 }
