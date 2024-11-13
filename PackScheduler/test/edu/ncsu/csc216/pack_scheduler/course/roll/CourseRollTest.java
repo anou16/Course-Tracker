@@ -114,20 +114,31 @@ class CourseRollTest {
 	 */
 	@Test
 	void testDrop() {
+	    CourseRoll c = course.getCourseRoll();
+	    c.setEnrollmentCap(10);
+	    Student sToDrop = new Student("first", "last", "id", "email@ncsu.edu", "hashedpassword");
+	    Student waitlistedStudent = new Student("wait", "list", "wlid", "waitlist@ncsu.edu", "hashedpassword");
 
-		CourseRoll c = course.getCourseRoll();
-		c.setEnrollmentCap(10);
-		Student sToDrop = new Student("first", "last", "id", "email@ncsu.edu", "hashedpassword");
-		c.enroll(sToDrop);
+	    c.enroll(sToDrop);
+	    assertEquals(9, c.getOpenSeats());
 
-		assertEquals(9, c.getOpenSeats());
+	    for (int i = 0; i < 9; i++) {
+	        c.enroll(new Student("First" + i, "Last" + i, "id" + i, "email" + i + "@ncsu.edu", "hashedpassword"));
+	    }
+	    c.enroll(waitlistedStudent);
+	    assertEquals(0, c.getOpenSeats());
+	    assertEquals(1, c.getNumberOnWaitlist());
 
-		c.drop(sToDrop);
-		// assertEquals(3, student.size());
-		assertEquals(10, c.getOpenSeats());
+	    c.drop(sToDrop);
+	    assertEquals(0, c.getNumberOnWaitlist());
+	    assertEquals(10, c.getOpenSeats() - c.roll.size()); 
 
+	    assertThrows(IllegalArgumentException.class, () -> c.drop(null));
 
+	    Student notEnrolled = new Student("Not", "Enrolled", "neid", "notenrolled@ncsu.edu", "hashedpassword");
+	    assertThrows(IllegalArgumentException.class, () -> c.drop(notEnrolled));
 	}
+
 
 	/**
 	 * Tests the drop method with wait list functionality.
