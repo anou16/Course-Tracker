@@ -126,17 +126,23 @@ public class CourseRoll {
 	    }
 
 	    if (roll.contains(s)) {
+	        
 	        roll.remove(s);
+
+	       
 	        if (!waitlist.isEmpty() && getOpenSeats() > 0) {
-	            Student nextInLine = waitlist.remove(0);
-	            roll.add(nextInLine);
+	            Student nextInLine = waitlist.remove(0); 
+	            roll.add(nextInLine);  
 	        }
 	    } else if (waitlist.contains(s)) {
+	        
 	        waitlist.remove(s);
 	    } else {
+	       
 	        throw new IllegalArgumentException("Student not enrolled");
 	    }
 	}
+
 
 	
 
