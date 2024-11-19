@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
  * Tests FacultyDirectory.
  * Verifies functionality for adding, removing, saving, and loading faculty records.
  * Also includes tests for invalid inputs and duplicate IDs.
+ * @author wangc
  */
 public class FacultyDirectoryTest {
 
@@ -47,13 +48,13 @@ public class FacultyDirectoryTest {
      */
     @BeforeEach
     public void setUp() throws Exception {
-        directory = new FacultyDirectory(); // Fresh instance for each test
+        directory = new FacultyDirectory();
 
         Path sourcePath = FileSystems.getDefault().getPath("test-files", "faculty_records.txt");
         Path destinationPath = FileSystems.getDefault().getPath("test-files", "test_faculty_records.txt");
         try {
-            Files.deleteIfExists(destinationPath); // Remove old test files
-            Files.copy(sourcePath, destinationPath); // Copy the original file to use in tests
+            Files.deleteIfExists(destinationPath); 
+            Files.copy(sourcePath, destinationPath); 
         } catch (IOException e) {
             fail("Unable to reset test files.");
         }
@@ -91,18 +92,17 @@ public class FacultyDirectoryTest {
         assertEquals(8, facultyDirectory.length);
 
         // Verify the first record
-        assertEquals("Ashely", facultyDirectory[0][0]); 
-        assertEquals("Witt", facultyDirectory[0][1]);  
-        assertEquals("awitt", facultyDirectory[0][2]); 
+        assertEquals("Ashely", facultyDirectory[0][0]);
+        assertEquals("Witt", facultyDirectory[0][1]);
+        assertEquals("awitt", facultyDirectory[0][2]);
     }
-
 
     /**
      * Tests FacultyDirectory.addFaculty().
      */
     @Test
     public void testAddFaculty() {
-        directory.newFacultyDirectory(); // Reset the directory before testing
+        directory.newFacultyDirectory(); 
 
         assertTrue(directory.addFaculty(FIRST_NAME, LAST_NAME, ID, EMAIL, PASSWORD, PASSWORD, MAX_COURSES));
         assertEquals(1, directory.getFacultyDirectory().length);
@@ -110,8 +110,15 @@ public class FacultyDirectoryTest {
         // Test duplicate ID
         assertFalse(directory.addFaculty(FIRST_NAME, LAST_NAME, ID, EMAIL, PASSWORD, PASSWORD, MAX_COURSES));
         assertEquals(1, directory.getFacultyDirectory().length);
-    }
 
+        // Test invalid max courses
+        try {
+            directory.addFaculty(FIRST_NAME, LAST_NAME, ID, EMAIL, PASSWORD, PASSWORD, -1);
+            fail("Expected IllegalArgumentException for invalid maxCourses.");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Invalid maxCourses", e.getMessage());
+        }
+    }
 
     /**
      * Tests FacultyDirectory.removeFaculty().
@@ -132,13 +139,12 @@ public class FacultyDirectoryTest {
      */
     @Test
     public void testSaveFacultyDirectory() {
-        directory.loadFacultyFromFile(validTestFile); 
+        directory.loadFacultyFromFile(validTestFile);
         assertEquals(8, directory.getFacultyDirectory().length); 
 
         directory.saveFacultyDirectory(testFile);
-        checkFiles(expectedFullFile, testFile);
+        checkFiles(expectedFullFile, testFile); 
     }
-
 
     /**
      * Tests FacultyDirectory.getFacultyDirectory().
