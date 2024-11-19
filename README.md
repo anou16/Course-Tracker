@@ -7,3 +7,6 @@
 
 Lab 10
 - apiduru implemented and tested custom LinkedList
+- Michael implemented and tested Faculty
+- Michael implemented and tested FacultyRecordIO
+- Michael implemented and tested FacultyDirectory
