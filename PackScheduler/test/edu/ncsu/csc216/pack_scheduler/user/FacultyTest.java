@@ -9,12 +9,30 @@ import org.junit.Test;
  */
 public class FacultyTest {
 
-    /** Test data */
+	/** 
+	 * First name of the test user. 
+	 */
     private static final String FIRST_NAME = "Michael";
+    /** 
+     * Last name of the test user. 
+     */
     private static final String LAST_NAME = "Wang";
+    /** 
+     * Unique identifier (ID) of the test user. 
+     */
     private static final String ID = "cwang69";
+    /** 
+     * Email address of the test user. 
+     */
     private static final String EMAIL = "cwang69@ncsu.edu";
+    /** 
+     * Hashed password of the test user. 
+     * Note: This is a mock value and should represent the hashed form of the password.
+     */
     private static final String PASSWORD = "hashedpassword";
+    /** 
+     * Maximum number of courses the test user can teach. 
+     */
     private static final int MAX_COURSES = 3;
 
     /** Tests the Faculty constructor and getters */

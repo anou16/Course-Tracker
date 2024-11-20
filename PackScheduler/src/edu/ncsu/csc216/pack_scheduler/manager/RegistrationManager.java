@@ -24,6 +24,7 @@ import edu.ncsu.csc216.pack_scheduler.user.schedule.Schedule;
  * 
  * @author Sarah Heckman
  * @author Neha Pothireddy
+ * @author Zhonghai pu
  */
 public class RegistrationManager {
 
@@ -47,7 +48,9 @@ public class RegistrationManager {
 
 	/** string that contains the properties of the registrar file */
 	private static final String PROP_FILE = "registrar.properties";
-	
+	/**
+	 * The directory of faculty members maintained by the system.
+	 */
 	private FacultyDirectory facultyDirectory;
 
 	/**
@@ -109,6 +112,11 @@ public class RegistrationManager {
 		}
 		return instance;
 	}
+	/**
+	 * Retrieves the faculty directory containing the list of faculty members.
+	 * 
+	 * @return the faculty directory
+	 */
 	public FacultyDirectory getFacultyDirectory() { 
 	    return facultyDirectory;
 	}
@@ -168,7 +176,7 @@ public class RegistrationManager {
 	            return true;
 	        }
 	    }
-		 throw new IllegalArgumentException("User doesn't exist.");
+		 throw new IllegalArgumentException("User doesn't exist."); 														
 	}
 
 	/**
