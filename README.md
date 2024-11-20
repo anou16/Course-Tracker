@@ -10,3 +10,5 @@ Lab 10
 - Michael implemented and tested Faculty
 - Michael implemented and tested FacultyRecordIO
 - Michael implemented and tested FacultyDirectory
+- zpu updated RegistrationManager
+- apiduru generated Javadoc
