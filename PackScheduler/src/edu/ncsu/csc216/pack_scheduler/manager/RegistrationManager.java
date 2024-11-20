@@ -11,7 +11,9 @@ import java.util.Properties;
 import edu.ncsu.csc216.pack_scheduler.catalog.CourseCatalog;
 import edu.ncsu.csc216.pack_scheduler.course.Course;
 import edu.ncsu.csc216.pack_scheduler.course.roll.CourseRoll;
+import edu.ncsu.csc216.pack_scheduler.directory.FacultyDirectory;
 import edu.ncsu.csc216.pack_scheduler.directory.StudentDirectory;
+import edu.ncsu.csc216.pack_scheduler.user.Faculty;
 import edu.ncsu.csc216.pack_scheduler.user.Student;
 import edu.ncsu.csc216.pack_scheduler.user.User;
 import edu.ncsu.csc216.pack_scheduler.user.schedule.Schedule;
@@ -45,14 +47,17 @@ public class RegistrationManager {
 
 	/** string that contains the properties of the registrar file */
 	private static final String PROP_FILE = "registrar.properties";
+	
+	private FacultyDirectory facultyDirectory;
 
 	/**
 	 * Creates a RegistrationManager object
 	 */
 	private RegistrationManager() {
 		createRegistrar();
-		courseCatalog = new CourseCatalog();
-		studentDirectory = new StudentDirectory();
+	    courseCatalog = new CourseCatalog();
+	    studentDirectory = new StudentDirectory();
+	    facultyDirectory = new FacultyDirectory(); 
 		// currentUser = new User();
 	}
 
@@ -104,7 +109,9 @@ public class RegistrationManager {
 		}
 		return instance;
 	}
-
+	public FacultyDirectory getFacultyDirectory() { 
+	    return facultyDirectory;
+	}
 	/**
 	 * Returns the courseCatalog
 	 * 
@@ -144,33 +151,24 @@ public class RegistrationManager {
 			currentUser = registrar;
 			return true;
 
-		} else {
-			Student s = studentDirectory.getStudentById(id);
-			if (s == null) {
-				throw new IllegalArgumentException("User doesn't exist.");
-			}
-			if (s.getPassword().equals(localHashPW)) {
-				currentUser = s;
-				return true;
-			}
+		} 
+		
+		if (studentDirectory != null) {
+	        Student student = studentDirectory.getStudentById(id);
+	        if (student != null && student.getPassword().equals(localHashPW)) {
+	            currentUser = student;
+	            return true;
+	        }
 		}
-
-//		Student s = studentDirectory.getStudentById(id);
-//		if(s == null) {
-//			throw new IllegalArgumentException("User does not exist.");
-//		}
-//		
-//		if (s.getPassword().equals(localHashPW)) {
-//			currentUser = s;
-//				return true;
-//		}	
-
-//		if(s == null && !s.getId().equals(registrar.getId()) || (!s.getPassword().equals(registrar.getPassword()))) {
-//			throw new IllegalArgumentException("User does not exist.");
-//		}
-
-		return false;
-
+	    
+		if (facultyDirectory != null) {
+	        Faculty faculty = facultyDirectory.getFacultyById(id);
+	        if (faculty != null && faculty.getPassword().equals(localHashPW)) {
+	            currentUser = faculty;
+	            return true;
+	        }
+	    }
+		 throw new IllegalArgumentException("User doesn't exist.");
 	}
 
 	/**

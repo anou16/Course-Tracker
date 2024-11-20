@@ -161,4 +161,13 @@ public class FacultyDirectory {
             throw new IllegalArgumentException("Cannot hash password");
         }
     }
+    public Faculty getFacultyById(String id) {
+        for (Faculty faculty : facultyDirectory) {
+            if (faculty.getId().equals(id)) {
+                return faculty;
+            }
+        }
+        return null;
+    }
+
 }
