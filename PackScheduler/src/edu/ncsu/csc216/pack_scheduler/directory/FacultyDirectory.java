@@ -161,6 +161,12 @@ public class FacultyDirectory {
             throw new IllegalArgumentException("Cannot hash password");
         }
     }
+    /**
+     * Retrieves a faculty member by their unique ID.
+     * 
+     * @param id the unique ID of the faculty member to retrieve
+     * @return the Faculty object with the specified ID, or null if no match is found
+     */
     public Faculty getFacultyById(String id) {
         for (Faculty faculty : facultyDirectory) {
             if (faculty.getId().equals(id)) {
