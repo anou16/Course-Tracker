@@ -1,6 +1,7 @@
 package edu.ncsu.csc216.pack_scheduler.util;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +18,7 @@ class LinkedListRecursiveTest {
 	@Test
 	void testLinkedRecursiveList() {
 		LinkedListRecursive<String> linkedRecursiveList = new LinkedListRecursive<>();
-		assertEquals(0, linkedRecursiveList.size(), "Initial size is 0.");
+		assertEquals(0, linkedRecursiveList.size());
 	}
 
 	/**
@@ -27,7 +28,7 @@ class LinkedListRecursiveTest {
 	void testAdd() {
 		LinkedListRecursive<String> linkedList = new LinkedListRecursive<>();
 		linkedList.add(0, "N");
-		assertEquals(1, linkedList.size(), "Size should equal 1.");
+		assertEquals(1, linkedList.size());
 	}
 
 	/**
@@ -38,9 +39,9 @@ class LinkedListRecursiveTest {
 		LinkedListRecursive<String> linkedList = new LinkedListRecursive<>();
 		linkedList.add(0, "N");
 		linkedList.add(1, "O");
-		assertEquals("N", linkedList.get(0), "Element = N.");
-		assertEquals("O", linkedList.get(1), "Element = O.");
-		assertThrows(IndexOutOfBoundsException.class, () -> linkedList.get(-5), "Index < 0 = Out of range.");
+		assertEquals("N", linkedList.get(0));
+		assertEquals("O", linkedList.get(1));
+		assertThrows(IndexOutOfBoundsException.class, () -> linkedList.get(-5));
 	}
 
 	/**
@@ -52,8 +53,8 @@ class LinkedListRecursiveTest {
 		linkedList.add(0, "N");
 		linkedList.add(1, "O");
 		linkedList.remove(0);
-		assertEquals(1, linkedList.size(), "Size = 1?");
-		assertEquals("O", linkedList.get(0), "Element = O?");
+		assertEquals(1, linkedList.size());
+		assertEquals("O", linkedList.get(0));
 	}
 
 	/**
@@ -64,8 +65,8 @@ class LinkedListRecursiveTest {
 		LinkedListRecursive<String> linkedList = new LinkedListRecursive<>();
 		linkedList.add(0, "N");
 		linkedList.add(1, "O");
-		assertEquals("N", linkedList.set(0, "!"), "Original = N.");
-		assertEquals("!", linkedList.get(0), "New = !.");
+		assertEquals("N", linkedList.set(0, "!"));
+		assertEquals("!", linkedList.get(0));
 	}
 
 	/**
@@ -116,9 +117,9 @@ class LinkedListRecursiveTest {
 		linkedList.add(1, "B");
 		linkedList.remove(0);
 		linkedList.add(0, "C");
-		assertEquals(2, linkedList.size(), "Size should be 2 after adding, removing, and adding again.");
-		assertEquals("C", linkedList.get(0), "First element should be C.");
-		assertEquals("B", linkedList.get(1), "Second element should be B.");
+		assertEquals(2, linkedList.size());
+		assertEquals("C", linkedList.get(0));
+		assertEquals("B", linkedList.get(1));
 	}
 
 	/**
@@ -130,10 +131,10 @@ class LinkedListRecursiveTest {
 		for (int i = 0; i < 15; i++) {
 			linkedList.add(i, "Element-" + i);
 		}
-		assertEquals(15, linkedList.size(), "Size should be 15 after adding elements beyond the initial capacity.");
+		assertEquals(15, linkedList.size());
 
 		linkedList.set(14, "Updated-14");
-		assertEquals("Updated-14", linkedList.get(14), "Last element should be updated.");
+		assertEquals("Updated-14", linkedList.get(14));
 	}
 
 }
