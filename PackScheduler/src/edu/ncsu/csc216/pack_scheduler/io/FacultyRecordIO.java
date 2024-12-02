@@ -36,7 +36,7 @@ public class FacultyRecordIO {
 				Faculty faculty = processFaculty(fileScanner.nextLine());
 				faculties.add(faculty);
 			} catch (IllegalArgumentException e) {
-
+				// Do nothing here
 			}
 		}
 

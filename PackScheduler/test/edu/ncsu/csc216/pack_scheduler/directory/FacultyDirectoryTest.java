@@ -181,16 +181,4 @@ public class FacultyDirectoryTest {
 			fail("Error reading files: " + e.getMessage());
 		}
 	}
-
-	/**
-	 * Debugging method to print the faculty directory contents.
-	 */
-	@Test
-	public void debugFacultyDirectory() {
-		directory.loadFacultyFromFile(validTestFile);
-
-		for (String[] record : directory.getFacultyDirectory()) {
-			System.out.println(String.join(",", record));
-		}
-	}
 }
