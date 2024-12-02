@@ -2,10 +2,8 @@ package edu.ncsu.csc216.pack_scheduler.user.schedule;
 
 import static org.junit.Assert.*;
 
-import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
+//import java.nio.file.FileSystems;
+//import java.nio.file.Path;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -33,14 +31,16 @@ public class FacultyScheduleTest {
 		RegistrationManager.getInstance().clearData();
 
 		// Reset course_records.txt so that it's fine for other needed tests
-		Path sourcePath = FileSystems.getDefault().getPath("test-files", "starter_course_records.txt");
-		Path destinationPath = FileSystems.getDefault().getPath("test-files", "course_records.txt");
-		try {
-			Files.deleteIfExists(destinationPath);
-			Files.copy(sourcePath, destinationPath);
-		} catch (IOException e) {
-			fail("Unable to reset files");
-		}
+		// Path sourcePath = FileSystems.getDefault().getPath("test-files",
+		// "starter_course_records.txt");
+		// Path destinationPath = FileSystems.getDefault().getPath("test-files",
+		// "course_records.txt");
+//		try {
+//			Files.deleteIfExists(destinationPath);
+//			Files.copy(sourcePath, destinationPath);
+//		} catch (IOException e) {
+//			fail("Unable to reset files");
+//		}
 
 		catalog = new CourseCatalog();
 		catalog.loadCoursesFromFile("test-files/course_records.txt");

@@ -5,13 +5,13 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedList;
 import java.util.Scanner;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import edu.ncsu.csc216.pack_scheduler.user.Faculty;
+import edu.ncsu.csc216.pack_scheduler.util.LinkedList;
 
 /**
  * Tests the FacultyRecordIO class using a valid faculty records file.
