@@ -108,7 +108,7 @@ public class LinkedListRecursive<E> {
 	 * 
 	 * @param idx the index to get.
 	 * @return the value at the given index.
-	 * @throws IndexOutBoundsException if the index is invalid.
+	 * @throws IndexOutOfBoundsException if the index is invalid.
 	 */
 	public E get(int idx) {
 		if (idx < 0 || idx >= size) {
