@@ -88,7 +88,6 @@ public class FacultyTest {
 		Faculty f3 = new Faculty("Jane", "Doe", "jdoe", "jdoe@ncsu.edu", PASSWORD, 2);
 
 		assertEquals(f1, f2);
-		assertEquals(f1, f3);
 		assertEquals(f1.hashCode(), f2.hashCode());
 		assertNotEquals(f1.hashCode(), f3.hashCode());
 	}
