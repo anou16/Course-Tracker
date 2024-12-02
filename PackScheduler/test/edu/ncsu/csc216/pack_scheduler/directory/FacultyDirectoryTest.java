@@ -1,6 +1,9 @@
 package edu.ncsu.csc216.pack_scheduler.directory;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -172,11 +175,11 @@ public class FacultyDirectoryTest {
 				Scanner actScanner = new Scanner(new FileInputStream(actFile))) {
 
 			while (expScanner.hasNextLine()) {
-				assertTrue(actScanner.hasNextLine(), "Actual file has fewer lines than expected.");
+				assertTrue("Actual file has fewer lines than expected.", actScanner.hasNextLine());
 				assertEquals(expScanner.nextLine(), actScanner.nextLine());
 			}
 
-			assertFalse(actScanner.hasNextLine(), "Actual file has more lines than expected.");
+			assertFalse("Actual file has more lines than expected.", actScanner.hasNextLine());
 		} catch (IOException e) {
 			fail("Error reading files: " + e.getMessage());
 		}

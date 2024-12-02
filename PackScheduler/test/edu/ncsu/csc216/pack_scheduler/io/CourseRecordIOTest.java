@@ -91,9 +91,9 @@ public class CourseRecordIOTest {
 			SortedList<Course> courses = CourseRecordIO.readCourseRecords(validTestFile);
 			assertEquals(13, courses.size());
 
-			for (int i = 0; i < validCourses.length; i++) {
+//			for (int i = 0; i < validCourses.length; i++) {
 //				assertEquals(validCourses[i], courses.get(i).toString());
-			}
+//			}
 		} catch (FileNotFoundException e) {
 			fail("Unexpected error reading " + validTestFile);
 		}
