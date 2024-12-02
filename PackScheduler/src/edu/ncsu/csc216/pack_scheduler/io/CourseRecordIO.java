@@ -10,6 +10,7 @@ import java.util.Scanner;
 import edu.ncsu.csc216.pack_scheduler.course.Course;
 import edu.ncsu.csc216.pack_scheduler.directory.FacultyDirectory;
 import edu.ncsu.csc216.pack_scheduler.manager.RegistrationManager;
+import edu.ncsu.csc216.pack_scheduler.user.Faculty;
 import edu.ncsu.csc216.pack_scheduler.user.schedule.FacultySchedule;
 import edu.ncsu.csc217.collections.list.SortedList;
 
@@ -36,21 +37,14 @@ public class CourseRecordIO {
 	public static SortedList<Course> readCourseRecords(String fileName) throws FileNotFoundException {
 		Scanner fileReader = new Scanner(new FileInputStream(fileName)); // Create a file scanner to read the file
 		SortedList<Course> courses = new SortedList<Course>(); // Create an empty array of Course objects
+
 		while (fileReader.hasNextLine()) { // While we have more lines in the file
-			try { // Attempt to do the following
-					// Read the line, process it in readCourse, and get the object
-					// If trying to construct a Course in readCourse() results in an exception, flow
-					// of control will transfer to the catch block, below
+			try {
 				Course course = readCourse(fileReader.nextLine());
 
-				// Create a flag to see if the newly created Course is a duplicate of something
-				// already in the list
 				boolean duplicate = false;
-				// Look at all the courses in our list
 				for (int i = 0; i < courses.size(); i++) {
-					// Get the course at index i
 					Course current = courses.get(i);
-					// Check if the name and section are the same
 					if (course.getName().equals(current.getName())
 							&& course.getSection().equals(current.getSection())) {
 						// It's a duplicate!
@@ -58,7 +52,6 @@ public class CourseRecordIO {
 						break; // We can break out of the loop, no need to continue searching
 					}
 				}
-				// If the course is NOT a duplicate
 				if (!duplicate) {
 					courses.add(course); // Add to the ArrayList!
 				} // Otherwise ignore
@@ -68,6 +61,7 @@ public class CourseRecordIO {
 		}
 		// Close the Scanner b/c we're responsible with our file handles
 		fileReader.close();
+		RegistrationManager.getInstance();
 		// Return the ArrayList with all the courses we read!
 		return courses;
 	}
@@ -120,13 +114,12 @@ public class CourseRecordIO {
 			scnr.close();
 			Course course = new Course(name, title, section, creditHours, null, enrollmentCap, meetingDay, startTime,
 					endTime);
-			if (facultyDirectory.getFacultyById(instructorId) != null) {
-				course = new Course(name, title, section, creditHours, instructorId, enrollmentCap, meetingDay,
-						startTime, endTime);
-				FacultySchedule facultySchedule = facultyDirectory.getFacultyById(instructorId).getSchedule();
+			Faculty instructor = facultyDirectory.getFacultyById(instructorId);
+			if (instructor != null) {
+				course.setInstructorId(instructorId);
+				FacultySchedule facultySchedule = instructor.getSchedule();
 				facultySchedule.addCourseToSchedule(course);
 			}
-			RegistrationManager.getInstance();
 			return course;
 		} catch (Exception e) {
 			scnr.close();

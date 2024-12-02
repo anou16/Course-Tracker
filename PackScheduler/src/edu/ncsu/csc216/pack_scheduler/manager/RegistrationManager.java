@@ -58,9 +58,9 @@ public class RegistrationManager {
 	 */
 	private RegistrationManager() {
 		createRegistrar();
-	    courseCatalog = new CourseCatalog();
-	    studentDirectory = new StudentDirectory();
-	    facultyDirectory = new FacultyDirectory(); 
+		courseCatalog = new CourseCatalog();
+		studentDirectory = new StudentDirectory();
+		facultyDirectory = new FacultyDirectory();
 		// currentUser = new User();
 	}
 
@@ -112,14 +112,16 @@ public class RegistrationManager {
 		}
 		return instance;
 	}
+
 	/**
 	 * Retrieves the faculty directory containing the list of faculty members.
 	 * 
 	 * @return the faculty directory
 	 */
-	public FacultyDirectory getFacultyDirectory() { 
-	    return facultyDirectory;
+	public FacultyDirectory getFacultyDirectory() {
+		return facultyDirectory;
 	}
+
 	/**
 	 * Returns the courseCatalog
 	 * 
@@ -159,24 +161,24 @@ public class RegistrationManager {
 			currentUser = registrar;
 			return true;
 
-		} 
-		
-		if (studentDirectory != null) {
-	        Student student = studentDirectory.getStudentById(id);
-	        if (student != null && student.getPassword().equals(localHashPW)) {
-	            currentUser = student;
-	            return true;
-	        }
 		}
-	    
+
+		if (studentDirectory != null) {
+			Student student = studentDirectory.getStudentById(id);
+			if (student != null && student.getPassword().equals(localHashPW)) {
+				currentUser = student;
+				return true;
+			}
+		}
+
 		if (facultyDirectory != null) {
-	        Faculty faculty = facultyDirectory.getFacultyById(id);
-	        if (faculty != null && faculty.getPassword().equals(localHashPW)) {
-	            currentUser = faculty;
-	            return true;
-	        }
-	    }
-		 throw new IllegalArgumentException("User doesn't exist."); 														
+			Faculty faculty = facultyDirectory.getFacultyById(id);
+			if (faculty != null && faculty.getPassword().equals(localHashPW)) {
+				currentUser = faculty;
+				return true;
+			}
+		}
+		throw new IllegalArgumentException("User doesn't exist.");
 	}
 
 	/**
@@ -202,6 +204,61 @@ public class RegistrationManager {
 	public void clearData() {
 		courseCatalog.newCourseCatalog();
 		studentDirectory.newStudentDirectory();
+	}
+
+	/**
+	 * Adds a Faculty to a Course.
+	 * 
+	 * @param c the Course to be added to.
+	 * @param f the Faculty to be added.
+	 * @return true if the Faculty is able to add the course to their schedule.
+	 * @throws IllegalArgumentException if a non registrar user tries to add Faculty
+	 *                                  to course.
+	 */
+	public boolean addFacultyToCourse(Course c, Faculty f) {
+		if (!getCurrentUser().equals(registrar)) {
+			throw new IllegalArgumentException("Non Registrar user cannot add faculty to the course");
+		}
+		if (getCurrentUser() == null) {
+			return false;
+		}
+		f.getSchedule().addCourseToSchedule(c);
+		return true;
+	}
+
+	/**
+	 * Removes a Faculty from a Course.
+	 * 
+	 * @param c the Course to be removed from.
+	 * @param f the Faculty to be removed.
+	 * @return true if the Faculty is able to remove the course from their schedule.
+	 * @throws IllegalArgumentException if a non registrar user tries to remove
+	 *                                  Faculty from course.
+	 */
+	public boolean removeFacultyFromCourse(Course c, Faculty f) {
+		if (!getCurrentUser().equals(registrar)) {
+			throw new IllegalArgumentException("Non Registrar user cannot add faculty to the course");
+		}
+		if (getCurrentUser() == null) {
+			return false;
+		}
+		f.getSchedule().removeCourseFromSchedule(c);
+		return true;
+	}
+
+	/**
+	 * Resets a Faculty's schedule.
+	 * 
+	 * @param f the Faculty that will have a reset schedule.
+	 * @throws IllegalArgumentException if a non registrar user tries to reset the
+	 *                                  schedule.
+	 */
+	public void resetFacultySchedule(Faculty f) {
+		if (getCurrentUser() != null && getCurrentUser().getId().equals(registrar.getId())) {
+			f.getSchedule().resetSchedule();
+		} else {
+			throw new IllegalArgumentException("Non Registrar user cannot reset schedule");
+		}
 	}
 
 	/**
