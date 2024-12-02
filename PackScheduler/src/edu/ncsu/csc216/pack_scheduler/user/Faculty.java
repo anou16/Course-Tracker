@@ -11,6 +11,7 @@ import edu.ncsu.csc216.pack_scheduler.user.schedule.FacultySchedule;
  * Faculty members can teach between MIN_COURSES and MAX_COURSES per semester.
  * 
  * @author wangc
+ * @author Anoushka Piduru
  * 
  */
 public class Faculty extends User implements Comparable<Faculty> {
