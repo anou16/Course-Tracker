@@ -2,6 +2,9 @@ package edu.ncsu.csc216.pack_scheduler.util;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
+
+import java.util.ListIterator;
 
 import org.junit.jupiter.api.Test;
 
@@ -137,4 +140,21 @@ class LinkedListTest {
 		assertEquals("Updated-14", linkedList.get(14));
 	}
 
+	/**
+	 * Test methods in LinkedListIterator
+	 */
+	@Test
+	void testListIterator() {
+		LinkedList<String> a = new LinkedList<String>();
+		a.add("apple");
+		a.add("banana");
+		a.add("kiwi");
+		ListIterator<String> iterator = a.listIterator(1);
+
+		assertEquals(1, iterator.nextIndex());
+		assertTrue(iterator.hasNext());
+		assertTrue(iterator.hasPrevious());
+		assertEquals("apple", iterator.previous());
+		// assertEquals("banana", iterator.next());
+	}
 }

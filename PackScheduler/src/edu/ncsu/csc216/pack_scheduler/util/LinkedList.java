@@ -147,11 +147,14 @@ public class LinkedList<E> extends AbstractSequentialList<E> {
 
 			this.previous = front;
 			this.next = front.next;
+			this.previousIndex = -1;
+			this.nextIndex = 0;
+
 			for (int i = 0; i < index; i++) {
 				this.previous = this.next;
 				this.next = this.previous.next;
-				this.previousIndex = i - 1;
-				this.nextIndex = i;
+				this.previousIndex++;
+				this.nextIndex++;
 			}
 			this.lastRetrieved = null;
 		}
@@ -180,8 +183,8 @@ public class LinkedList<E> extends AbstractSequentialList<E> {
 			E data = next.data;
 			lastRetrieved = next;
 
+			previous = next;
 			next = next.next;
-			previous = previous.next;
 
 			nextIndex++;
 			previousIndex++;
@@ -213,7 +216,7 @@ public class LinkedList<E> extends AbstractSequentialList<E> {
 			E data = previous.data;
 			lastRetrieved = previous;
 
-			next = next.prev;
+			next = previous;
 			previous = previous.prev;
 
 			nextIndex--;
