@@ -92,8 +92,8 @@ public class Faculty extends User implements Comparable<Faculty> {
 			return 0 > super.getLastName().compareTo(s.getLastName()) ? -1 : 1;
 		} else if (super.getFirstName().compareTo(s.getFirstName()) != 0) {
 			return 0 > super.getFirstName().compareTo(s.getFirstName()) ? -1 : 1;
-		} else if (super.getId().compareTo(s.getFirstName()) != 0) {
-			return 0 > super.getFirstName().compareTo(s.getFirstName()) ? -1 : 1;
+		} else if (super.getId().compareTo(s.getId()) != 0) {
+			return 0 > super.getId().compareTo(s.getId()) ? -1 : 1;
 		} else {
 			return 0;
 		}

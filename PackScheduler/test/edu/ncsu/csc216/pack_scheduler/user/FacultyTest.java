@@ -2,6 +2,7 @@ package edu.ncsu.csc216.pack_scheduler.user;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
@@ -92,5 +93,33 @@ public class FacultyTest {
 		assertEquals(f1, f2);
 		assertEquals(f1.hashCode(), f2.hashCode());
 		assertNotEquals(f1.hashCode(), f3.hashCode());
+	}
+
+	/** Tests the compareTo method. */
+	@Test
+	public void testCompareTo() {
+		Faculty s1 = new Faculty("john", "doe", "jdoe", "jdoe@ncsu.edu", "password");
+		Faculty s2 = new Faculty("bob", "smith", "bsmith", "bsmith@ncsu.edu", "password");
+		Faculty s3 = new Faculty("jeff", "zed", "jzed", "jzed@ncsu.edu", "password");
+		Faculty s4 = new Faculty("may", "doe", "madoe", "madoe@ncsu.edu", "password");
+		Faculty s5 = new Faculty("may", "doe", "mdoe", "mdoe@ncsu.edu", "password");
+
+		// Test exception returned for comparing to null
+		assertThrows(NullPointerException.class, () -> s1.compareTo(null));
+
+		// Test object equals itself
+		assertEquals(0, s1.compareTo(s1));
+
+		// Test objects before
+		assertEquals(-1, s1.compareTo(s2));
+		assertEquals(-1, s2.compareTo(s3));
+		assertEquals(-1, s1.compareTo(s4));
+		assertEquals(-1, s4.compareTo(s5));
+
+		// Test objects after
+		assertEquals(1, s2.compareTo(s1));
+		assertEquals(1, s3.compareTo(s2));
+		assertEquals(1, s4.compareTo(s1));
+		assertEquals(1, s5.compareTo(s4));
 	}
 }
