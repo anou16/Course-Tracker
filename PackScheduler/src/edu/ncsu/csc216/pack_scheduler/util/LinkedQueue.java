@@ -38,6 +38,7 @@ public class LinkedQueue<E> implements Queue<E> {
 	 * Removes an element from the front of the queue.
 	 * 
 	 * @return the element being removed.
+	 * @throws NoSuchElementException if size is zero.
 	 */
 	public E dequeue() {
 		if (size() == 0) {

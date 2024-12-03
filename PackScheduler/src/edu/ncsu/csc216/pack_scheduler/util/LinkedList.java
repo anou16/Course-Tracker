@@ -248,7 +248,7 @@ public class LinkedList<E> extends AbstractSequentialList<E> {
 		/**
 		 * Removes the most recent element that was returned by next() or previous().
 		 * 
-		 * @throws IllegalArgumentException if there was no recently retrieved element.
+		 * @throws IllegalStateException if there was no recently retrieved element.
 		 */
 		@Override
 		public void remove() {

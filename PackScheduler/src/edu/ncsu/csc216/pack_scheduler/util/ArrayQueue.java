@@ -41,6 +41,7 @@ public class ArrayQueue<E> implements Queue<E> {
 	 * Removes an element from the front of the queue.
 	 * 
 	 * @return the element being removed.
+	 * @throws NoSuchElementException if size is 0.
 	 */
 	public E dequeue() {
 		if (size() == 0) {
